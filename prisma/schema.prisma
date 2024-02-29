@@ -37,10 +37,34 @@ model Player {
   updatedAt DateTime? @updatedAt @map("updated_at")
 
   teamId String @map("team_id")
-
   team Team @relation(fields: [teamId], references: [id])
+  rates Rate[] 
 
   @@map("players")
   
 }
 
+model Stage {
+  id  String @id @default(uuid())
+  slug String
+  stageInitDate DateTime @map("stage_init_date")
+  stageEndtDate DateTime @map("stage_end_date")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("stages")
+}
+
+model Rate {
+  id  String @id @default(uuid())
+  rate Int
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  stageId String @map("stage_id")
+  
+  player Player @relation(fields: [playerId], references: [id])
+  playerId String @map("player_id")
+  @@map("rates")
+}
