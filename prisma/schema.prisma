@@ -48,7 +48,7 @@ model Stage {
   id  String @id @default(uuid())
   slug String
   stageInitDate DateTime @map("stage_init_date")
-  stageEndtDate DateTime @map("stage_end_date")
+  stageEndDate DateTime @map("stage_end_date")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")

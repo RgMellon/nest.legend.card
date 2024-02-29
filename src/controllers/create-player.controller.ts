@@ -20,7 +20,7 @@ const createPlayerSchema = z.object({
 type CreatePlayerSchema = z.infer<typeof createPlayerSchema>
 
 @Controller('/player')
-export class PlayerController {
+export class CreatePlayerController {
   constructor(private prisma: PrismaService) {}
 
   @Post('/')
