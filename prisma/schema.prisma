@@ -52,7 +52,7 @@ model Stage {
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
-
+  rates Rate[] 
   @@map("stages")
 }
 
@@ -63,6 +63,7 @@ model Rate {
   updatedAt DateTime? @updatedAt @map("updated_at")
 
   stageId String @map("stage_id")
+  stage Stage @relation(fields: [stageId], references: [id])
   
   player Player @relation(fields: [playerId], references: [id])
   playerId String @map("player_id")

@@ -17,8 +17,6 @@ export class FetchPlayerController {
   async handle(
     @Query('teamId', queryValidationPipe) teamId: TeamQueryParamSchema,
   ) {
-    console.log(teamId)
-
     const players = await this.prisma.player.findMany({
       orderBy: {
         createdAt: 'asc',
