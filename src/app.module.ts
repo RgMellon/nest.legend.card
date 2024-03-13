@@ -9,6 +9,9 @@ import { FetchStageController } from './controllers/fetch-stage-controller'
 import { CreateStagesController } from './controllers/create-stage-controller'
 import { CreateRateController } from './controllers/create-rate.controller'
 import { FetchRatesController } from './controllers/fetch-rate-controller'
+import { FetchBestRatesWeekByPlayer } from './controllers/fetch-best-rates-week-by-player'
+import { BestRatingByPositionOfWeek } from './services/best-rating-by-position-of-week.service'
+import { RateService } from './services/rate.service'
 
 const createController = [
   CreateTeamsController,
@@ -22,6 +25,7 @@ const fetchController = [
   FetchPlayerController,
   FetchStageController,
   FetchRatesController,
+  FetchBestRatesWeekByPlayer,
 ]
 
 const deleteController = [DeleteTeamController]
@@ -29,6 +33,6 @@ const deleteController = [DeleteTeamController]
 @Module({
   imports: [],
   controllers: [...createController, ...fetchController, ...deleteController],
-  providers: [PrismaService],
+  providers: [PrismaService, BestRatingByPositionOfWeek, RateService],
 })
 export class AppModule {}

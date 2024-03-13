@@ -29,6 +29,7 @@ export class FetchRatesController {
             id: true,
             nickName: true,
             photo: true,
+            role: true,
           },
         },
         stage: {
@@ -41,6 +42,7 @@ export class FetchRatesController {
     })
 
     const modifiedRates = rates.map((rate) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { updatedAt, stageId, playerId, ...rest } = rate
       return rest
     })
