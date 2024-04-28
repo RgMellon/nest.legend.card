@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 
 type TableProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }
 
@@ -9,25 +10,20 @@ export class BestRatingByPositionOfWeek {
   private table: TableProps = {}
 
   execute(rates) {
-    rates.forEach((currentRate) => {
-      if (currentRate.rate < 80) return
-      const index = currentRate.player.role
+    const bestRatesByRole = rates.reduce((acc, currentRate) => {
+      if (currentRate.rate < 80) return acc
 
-      if (!this.table[index]) {
-        this.table[index] = currentRate
+      const role = currentRate.player.role
+
+      if (!acc[role] || currentRate.rate > acc[role].rate) {
+        acc[role] = currentRate
       }
 
-      if (currentRate.rate > this.table[index].rate) {
-        this.table[index] = currentRate
-      }
-    })
+      return acc
+    }, {})
 
-    return {
-      adc: this.table.ADC,
-      mid: this.table.MID,
-      jg: this.table.JG,
-      top: this.table.TOP,
-      sup: this.table.SUP,
-    }
+    const bestRates = Object.values(bestRatesByRole).filter((rate) => rate)
+
+    return bestRates
   }
 }

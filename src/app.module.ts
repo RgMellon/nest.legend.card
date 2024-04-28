@@ -12,6 +12,12 @@ import { FetchRatesController } from './controllers/fetch-rate-controller'
 import { FetchBestRatesWeekByPlayer } from './controllers/fetch-best-rates-week-by-player'
 import { BestRatingByPositionOfWeek } from './services/best-rating-by-position-of-week.service'
 import { RateService } from './services/rate.service'
+import { FetchPlayersByTeamsOnWeek } from './controllers/fetch-players-by-teams-on-week.controller'
+import { FetchPlayersByTeamsService } from './services/fetch-player-by-team.service'
+import { FetchProfileController } from './controllers/fetch-player-profile'
+import { FetchAllPlayers } from './controllers/fetch-all-players'
+import { GroupPlayerByRole } from './services/group-players-by-role.service'
+import { SearchPlayerController } from './controllers/search-player.controller'
 
 const createController = [
   CreateTeamsController,
@@ -26,6 +32,10 @@ const fetchController = [
   FetchStageController,
   FetchRatesController,
   FetchBestRatesWeekByPlayer,
+  FetchPlayersByTeamsOnWeek,
+  FetchProfileController,
+  FetchAllPlayers,
+  SearchPlayerController,
 ]
 
 const deleteController = [DeleteTeamController]
@@ -33,6 +43,12 @@ const deleteController = [DeleteTeamController]
 @Module({
   imports: [],
   controllers: [...createController, ...fetchController, ...deleteController],
-  providers: [PrismaService, BestRatingByPositionOfWeek, RateService],
+  providers: [
+    PrismaService,
+    BestRatingByPositionOfWeek,
+    RateService,
+    FetchPlayersByTeamsService,
+    GroupPlayerByRole,
+  ],
 })
 export class AppModule {}

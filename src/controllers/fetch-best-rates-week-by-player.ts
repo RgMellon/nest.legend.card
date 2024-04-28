@@ -27,6 +27,7 @@ export class FetchBestRatesWeekByPlayer {
     stageId: BestPlayersWeekQueryParamSchema,
   ) {
     const ratesByStage = await this.rateService.getRatesByStage(stageId)
+
     return this.bestRatingByPositionOfWeek.execute(ratesByStage)
   }
 }
