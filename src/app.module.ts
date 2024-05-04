@@ -18,6 +18,8 @@ import { FetchProfileController } from './controllers/fetch-player-profile'
 import { FetchAllPlayers } from './controllers/fetch-all-players'
 import { GroupPlayerByRole } from './services/group-players-by-role.service'
 import { SearchPlayerController } from './controllers/search-player.controller'
+import { FetchPlayersByTeamsOnWeekV2 } from './controllers/fetch-players-by-teams-on-week.controller-v2'
+import { FindRatePlayerByStageIdRepository } from './repository/find-rate-player-by-stage-id'
 
 const createController = [
   CreateTeamsController,
@@ -36,6 +38,7 @@ const fetchController = [
   FetchProfileController,
   FetchAllPlayers,
   SearchPlayerController,
+  FetchPlayersByTeamsOnWeekV2,
 ]
 
 const deleteController = [DeleteTeamController]
@@ -49,6 +52,7 @@ const deleteController = [DeleteTeamController]
     RateService,
     FetchPlayersByTeamsService,
     GroupPlayerByRole,
+    FindRatePlayerByStageIdRepository,
   ],
 })
 export class AppModule {}

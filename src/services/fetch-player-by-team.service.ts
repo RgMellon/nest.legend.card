@@ -1,46 +1,17 @@
 import { Injectable } from '@nestjs/common'
 // import { mapTeamData } from 'src/mappers/team.mapper'
 import { PrismaService } from 'src/prisma/prisma.service'
+import { FindRatePlayerByStageIdRepository } from 'src/repository/find-rate-player-by-stage-id'
 
 @Injectable()
 export class FetchPlayersByTeamsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly findRatePlayerByStageIdRespository: FindRatePlayerByStageIdRepository,
+  ) {}
 
   async fetchPlayersByTeams(stageId: string) {
-    // TODO ver a possibilidade de criar um repository ou algo do tipo
-    const rates = await this.prisma.rate.findMany({
-      orderBy: {
-        createdAt: 'asc',
-      },
-      where: {
-        stageId,
-      },
-      include: {
-        player: {
-          select: {
-            id: true,
-            nickName: true,
-            photo: true,
-            role: true,
-            team: {
-              select: {
-                id: true,
-                logo: true,
-                name: true,
-              },
-            },
-          },
-        },
-        stage: {
-          select: {
-            id: true,
-            slug: true,
-          },
-        },
-      },
-    })
-
-    // TODO usar os mappers-criados
+    const rates = await this.findRatePlayerByStageIdRespository.find(stageId)
 
     const teamsWithPlayers = rates.map((rate) => {
       return {
