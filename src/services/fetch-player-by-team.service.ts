@@ -1,12 +1,10 @@
 import { Injectable } from '@nestjs/common'
-// import { mapTeamData } from 'src/mappers/team.mapper'
-import { PrismaService } from 'src/prisma/prisma.service'
+
 import { FindRatePlayerByStageIdRepository } from 'src/repository/find-rate-player-by-stage-id'
 
 @Injectable()
 export class FetchPlayersByTeamsService {
   constructor(
-    private prisma: PrismaService,
     private readonly findRatePlayerByStageIdRespository: FindRatePlayerByStageIdRepository,
   ) {}
 
@@ -25,7 +23,7 @@ export class FetchPlayersByTeamsService {
       }
     })
 
-    const groupedByTeam = teamsWithPlayers.reduce((accumulator, curr) => {
+    const groupedByTeam = teamsWithPlayers?.reduce((accumulator, curr) => {
       const { name, player } = curr.team
 
       if (accumulator[name]) {
