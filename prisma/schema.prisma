@@ -31,7 +31,7 @@ model Player {
   role String
   photo String
   nationality String
-  
+  isActive    Boolean   @default(true)
   
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")

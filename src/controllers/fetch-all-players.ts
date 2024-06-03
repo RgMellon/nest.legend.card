@@ -33,6 +33,9 @@ export class FetchAllPlayers {
       orderBy: {
         createdAt: 'asc',
       },
+      where: {
+        isActive: true,
+      },
       include: {
         rates: {
           select: {

@@ -23,6 +23,7 @@ import { FindRatePlayerByStageIdRepository } from './repository/find-rate-player
 import { FetchRatesBestPlayersAllStagesController } from './controllers/fetch-rate-best-players-all-stages'
 import { FindBestPlayersRepository } from './repository/find-best-players'
 import { FindBestPlayersService } from './services/find-best-players.service'
+import { UpdateDisactivePlayer } from './controllers/update-desactive-player.controller'
 
 const createController = [
   CreateTeamsController,
@@ -47,9 +48,16 @@ const fetchController = [
 
 const deleteController = [DeleteTeamController]
 
+const updateController = [UpdateDisactivePlayer]
+
 @Module({
   imports: [],
-  controllers: [...createController, ...fetchController, ...deleteController],
+  controllers: [
+    ...createController,
+    ...fetchController,
+    ...deleteController,
+    ...updateController,
+  ],
   providers: [
     PrismaService,
     BestRatingByPositionOfWeek,
