@@ -1,17 +1,13 @@
 import { Controller, Get } from '@nestjs/common'
-import { PrismaService } from 'src/prisma/prisma.service'
+import { FetchStages } from 'src/services/fetch-stages.service'
 
 @Controller('/stages')
 export class FetchStageController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private fetchStages: FetchStages) {}
 
   @Get('')
   async handle() {
-    const stages = await this.prisma.stage.findMany({
-      orderBy: {
-        createdAt: 'asc',
-      },
-    })
+    const stages = await this.fetchStages.execute()
 
     return {
       stages,

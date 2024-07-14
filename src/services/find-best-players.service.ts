@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { FindBestPlayersRepository } from 'src/repository/find-best-players'
+import { StageRepository } from 'src/repository/stage-repository'
 
 type Props = {
   id: string
@@ -11,9 +12,15 @@ type Props = {
 
 @Injectable()
 export class FindBestPlayersService {
-  constructor(private readonly ratesRepository: FindBestPlayersRepository) {}
+  constructor(
+    private readonly ratesRepository: FindBestPlayersRepository,
+    private readonly stageRespository: StageRepository,
+  ) {}
 
   async getRatesGroupedByRoleAboveThreshold(threshold: number) {
+    const stages = await this.stageRespository.findAll()
+    console.log(stages)
+
     const rates = await this.ratesRepository.find(threshold)
 
     const playerMap = new Map<string, { player: Props; totalRate: number }>()
@@ -25,7 +32,7 @@ export class FindBestPlayersService {
       { role: string; players: Props[] }
     >()
 
-    this.groupPlayersByRole(playerMap, playersGroupedByRole)
+    this.groupPlayersByRole(playerMap, playersGroupedByRole, stages)
 
     playersGroupedByRole.forEach((roleData) => {
       roleData.players.sort(
@@ -56,7 +63,7 @@ export class FindBestPlayersService {
     }
   }
 
-  private groupPlayersByRole(playerMap, playersGroupedByRole) {
+  private groupPlayersByRole(playerMap, playersGroupedByRole, stages) {
     playerMap.forEach((value) => {
       const role = value.player.role
       const player = value.player
@@ -67,8 +74,10 @@ export class FindBestPlayersService {
 
       const roleData = playersGroupedByRole.get(role)
       if (roleData) {
-        roleData.players.push({ ...player, totalRate: value.totalRate / 4 })
-        // TODO substituir o 4 pelo total de stages
+        roleData.players.push({
+          ...player,
+          totalRate: value.totalRate / stages.length,
+        })
       }
     })
   }
