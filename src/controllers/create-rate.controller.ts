@@ -33,7 +33,7 @@ export class CreateRateController {
       },
     })
 
-    if (result.rate) {
+    if (!!result && result.rate) {
       throw new BadRequestException(
         'Ops,  this player already had a rate in this stage week',
       )
